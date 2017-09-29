@@ -1,0 +1,19 @@
+# Change ID of SATA device for Intel 7 Series Chipset
+into device label SAT0 set_label begin SATA end;
+into_all all code_regex SAT0 replaceall_matched begin SATA end;
+into device label SAT1 remove_entry;
+into method label _DSM parent_label SATA remove_entry;
+into device label SATA insert begin
+Method (_DSM, 4, NotSerialized)\n
+{\n
+	Store (Package () {\n
+		"AAPL,slot-name", "Built In",\n
+		"name", "Intel AHCI Controller",\n
+		"model", Buffer () {"Intel 7 Series Chipset Family SATA Controller"},\n
+		"device_type", Buffer () {"AHCI Controller"},\n
+		"device-id", Buffer () {0x03,0x1E,0x00,0x00}\n
+	}, Local0)\n
+	DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))\n
+	Return (Local0)\n
+}
+end;

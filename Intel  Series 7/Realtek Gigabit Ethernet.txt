@@ -1,0 +1,18 @@
+# Fixes 'Built-in' status for Realtek Gigabit Ethernet
+into method label _DSM parent_label PXSX remove_entry;
+into device label PXSX insert begin
+Method (_DSM, 4, NotSerialized)\n
+{\n
+	Store (Package () {\n
+		"AAPL,slot-name", "Built In",\n
+		"name", "Realtek Ethernet Controller",\n
+		"model", Buffer () {"Realtek RTL8168F/8111F Gigabit Network Controller"},\n
+		"device_type", Buffer () {"Ethernet Controller"},\n
+		"built-in", Buffer () {0x01},\n
+		"location", Buffer () {"1"}\n
+	}, Local0)\n
+	DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))\n
+	Return (Local0)\n
+}
+end;
+

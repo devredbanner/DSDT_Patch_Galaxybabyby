@@ -1,0 +1,10 @@
+#External Fixes
+into_all all code_regex \/\*\sExternal\sreference\s\*\/\s+ removeall_matched;
+into definitionblock code_regex ,\sUnknownObj removeall_matched;
+
+into definitionblock code_regex External\s\(_SB_.PCI0.PEG0\)\s+ removeall_matched;
+into definitionblock code_regex External\s\(_SB_.PCI0.PEG0.PEGP\)\s+ removeall_matched;
+into definitionblock code_regex External\s\(_SB_.PCI0.PEG1\)\s+ removeall_matched;
+into definitionblock code_regex External\s\(_SB_.PCI0.PEG2\)\s+ removeall_matched;
+into definitionblock code_regex External\s\(_SB_.PCI0.PEGP\)\s+ removeall_matched;
+into definitionblock code_regex External\s\(_SB_.PCI0.PEGP.GFX0\)\s+ removeall_matched;

@@ -1,0 +1,17 @@
+# Fix the LPC Device for Intel 7 Series by galaxybabyby
+into method label _DSM parent_label LPCB remove_entry;
+into device label LPCB insert begin
+Method (_DSM, 4, NotSerialized)\n
+{\n
+	Store (Package ()\n
+	{\n 
+		"device-id", Buffer () {0x44, 0x1E, 0x00, 0x00},\n
+		"subsystem-id", Buffer () {0x44, 0x1E, 0x00, 0x00},\n
+		"name", Buffer () {"pci8086,1e44"},\n
+		"compatible", Buffer () {"pci8086,1e44"},\n
+		"IOName", Buffer () {"pci8086,1e44"},\n
+	}, Local0)\n
+	DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))\n
+	Return (Local0)\n
+}
+end;

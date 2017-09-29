@@ -1,0 +1,21 @@
+# fix the Intel MEI device for Intel 6 Series by galaxybabyby
+into device label MEI parent_label PCI0 remove_entry;
+into device label PCI0 insert begin
+Device (MEI)\n
+{\n
+	Name (_ADR, 0x00160000)\n
+	Method (_DSM, 4, NotSerialized)\n
+	{\n
+		Store (Package () {\n
+			"layout-id", Buffer() {0x3A,0x1E,0x00,0x00},\n
+			"device-id", Buffer () {0x3A, 0x1E, 0x00, 0x00},\n
+			"subsystem-id", Buffer () {0x3A, 0x1E, 0x00, 0x00},\n
+			"name", Buffer () {"pci8086,1e3a"},\n
+			"compatible", Buffer () {"pci8086,1e3a"},\n
+			"IOName", Buffer () {"pci8086,1e3a"},\n
+		}, Local0)\n
+		DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))\n
+		Return (Local0)\n
+	}\n
+}
+end;
